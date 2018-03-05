@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+
+@model IEnumerable<MvcBlog.Models.Makaleler>
+
+
+<div class="more_works">
+    <h2>Beğenebileceğin bazı makaleler <i class="fa fa-thumbs-o-up"></i></h2>
+
+    <div class="more_works_container">
+        @foreach (var item in Model)
+        {
+            <div class="single_more_works floatleft">
+                @if (item.Galeri.ortaresimimage != null)
+                {
+                    string imageBase64 = Convert.ToBase64String(item.Galeri.ortaresimimage);
+                    string imageSrc = string.Format("data:image/png;base64,{0}", imageBase64);
+                    <img src="@imageSrc" width="220" height="150" />
+                }
+                else
+                {
+                    <img src="@item.Galeri.ortaresimyol" width="220" height="150" />
+                }
+
+
+                <a href="@Url.RouteUrl("MakaleDetay", new { id = @item.makaleid, baslik = MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(@item.makalebaslik) })"><h2>@item.makalebaslik</h2></a>
+
+            </div>
+        }
+
+    </div>
+
+
+</div>

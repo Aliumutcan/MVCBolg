@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+
+@{
+    if (TempData["uye"] == null)
+    {
+        <div class="uyegiris" style="float:right; width:258px; height:65px;">
+            
+            @using (Html.BeginForm("UyeGiris", "Home", FormMethod.Post))
+            {
+                <div style="float:left;">
+                    <input type="text" placeholder="Email" name="uyemail" id="uyemail" value="" class="wpcf7-email" />
+                    <input type="text" placeholder="Email" id="uyemail2" value=" " style="display:none;" />
+                    <input type="password" placeholder="Şifreniz" name="uyesifre" id="uyesifre" class="wpcf7-text" />
+                </div>
+                <input type="submit" value="Giriş" style="width:70px;height:28px;background-color:rgb(251, 217, 27); float:right; margin-top:-54px;" />
+            }
+            @using (Html.BeginForm("UyeKayitOl", "Home", FormMethod.Get))
+            {
+                <input type="submit" value="Üye ol" style="width:70px;height:28px;background-color:rgb(251, 217, 27); float:right; margin-top:-28px;" />
+            }
+
+        </div>
+    }
+    else if (TempData["uye"] != null)
+    {
+        <div class="uyegiris" style="float:right; width:250px; height:65px;">
+            <div style="float:left; font-size:18px; font-weight:bold; color:rgb(251, 217, 27);">
+                Hoşgeldiniz @TempData["uye"]
+            </div><br />
+            @using (Html.BeginForm("UyeCikis", "Home"))
+            {
+                <input type="submit" value="Cıkış" style="width:70px;height:25px;background-color:rgb(251, 217, 27); float:right;" />
+            }
+
+        </div>
+    }
+}
+
+

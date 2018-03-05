@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "MakaleDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model MvcBlog.Models.Makaleler
+@section baslik{
+    <title>@MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(Model.makalebaslik)</title>
+}
+<div class="clearfix main_content floatleft">
+
+
+    <div class="clearfix content">
+        <div class="content_title"><h2>@Model.makalebaslik</h2></div>
+        <div class="single_work_page clearfix">
+            <div class="work_single_page_feature">
+                @if (Model.Galeri.buyukresimimage != null)
+                {
+                    string imageBase64 = Convert.ToBase64String(Model.Galeri.buyukresimimage);
+                    string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                    <img src="@imageSrc" />
+                }
+                else
+                {
+                    <img src="@Model.Galeri.buyukresimyol" />
+                }
+
+            </div>
+            <div class="work_meta clearfix">
+                <p class="floatleft">Completed : <span>@Model.makaleyayintarihi</span> Client Name: <span>@Model.Yazarlar.yazaradi @Model.Yazarlar.yazarsoyadi</span></p>
+                <a class="floatright">
+                    @{
+                        if (Model.Etiteklers.Count>0)
+                        {
+                            string etiketler = "";
+                            foreach (var item in Model.Etiteklers)
+                            {
+                                etiketler = etiketler + item.etiketadi + ",";
+                            }
+                            <div>Etiketler:@etiketler.Substring(0, (etiketler.Length - 1))</div> 
+                        }
+                    }
+                </a>
+            </div>
+            <div class="single_work_page_content">
+                @Html.Raw(@Model.makaleicerik)
+            </div>
+
+        </div>
+
+        @{
+            Html.RenderAction("MakaleYorumlari", "Makale");
+            <br /><br />
+            Html.RenderAction("BenzerMakaleler");
+        }
+    </div>
+
+</div>
+
+@*@{
+    MvcBlog.Controllers.MakaleController gorunum = new MvcBlog.Controllers.MakaleController();
+    gorunum.MakaleGorunum(Model.makaleid);
+}*@

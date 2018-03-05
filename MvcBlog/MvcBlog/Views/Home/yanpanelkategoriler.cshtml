@@ -1,0 +1,19 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<MvcBlog.Models.Kategoriler>
+<div class="clearfix single_sidebar category_items">
+    <h2>Kategoriler</h2>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li class="cat-item"><a href="@Url.RouteUrl("MakaleKategoriGetir", new {kategoriid=item.kategoriid, kategori = MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(@item.kategoriadi) })">@item.kategoriadi</a>(@item.Makalelers.Count)</li>
+        }
+        
+
+    </ul>
+</div>
+
+
+                                

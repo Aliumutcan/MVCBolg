@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "YonetimMakaleDüzenle";
+    Layout = "~/Views/Shared/_YonetimLayout.cshtml";
+}
+@model MvcBlog.Models.Makaleler
+
+@using (Html.BeginForm("YonetimMakaleDuzenle", "yonetim", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @Html.AntiForgeryToken()
+    <div class="clearfix content">
+
+        <div class="contact_us">
+
+            <h1>Makalenini düzenleyebilirsiniz</h1>
+
+            <p>
+
+            </p>
+
+            <form>
+                <table>
+                    <tr>
+                        <td>Makale başlık: </td>
+                        <td><input type="text" class="textbox" name="makalebaslik" />@Model.makalebaslik</td>
+                    </tr>
+                    <tr>
+                        <td>Makale Etiket</td>
+                        <td><input type="text" class="textbox" name="etiketler" />@Model.Etiteklers.ToList()</td>
+                </tr>
+                <tr>
+                    <td>Makale kategori </td>
+                    <td>
+                        <select name="makalekategoriID" class="select">
+                            <option value="@Model.Kategoriler.kategoriid">@Model.Kategoriler.kategoriadi</option>
+                            @foreach (var item in ViewBag.kategoriler)
+                            {
+                                if (@Model.Kategoriler.kategoriadi != @item.kategoriadi)
+                                {
+                                    <option value="@item.kategoriid">@item.kategoriadi</option>
+                                }
+                            }
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td> Makale içerik</td>
+                    <td>
+
+                        <script src="~/Content/tinymce/js/tinymce/tinymce.dev.js"></script>
+                        <script>
+                            tinymce.init({
+                                selector: 'textarea',
+                                height: 500,
+                                plugins: [
+                                  'advlist autolink lists link image charmap print preview anchor',
+                                  'searchreplace visualblocks code fullscreen',
+                                  'insertdatetime media table contextmenu paste code'
+                                ],
+                                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                                content_css: [
+                                  '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+                                  '//www.tinymce.com/css/codepen.min.css'
+                                ]
+                            });</script>
+                        <textarea style="width:350px; min-height:150px;" name="makaleicerik">@Model.makaleicerik</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Makale kapak resmi</td>
+                    <td>
+                        <input type="file" name="resim" />
+                        @if (Model.Galeri.kucukresimimage != null)
+                        {
+                            string imageBase64 = Convert.ToBase64String(Model.Galeri.kucukresimimage);
+                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                            <img src="@imageSrc" />
+                        }
+                        else
+                        {
+                            <img src="@Model.Galeri.kucukresimyol" />
+                        }
+                        
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="Submit" class="wpcf7-submit" value="Gönder" /></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+
+</div>
+<style>
+    .textbox {
+        background: white;
+        border: 1px double #DDD;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #333;
+        color: #666;
+        outline: none;
+        height: 25px;
+        width: 275px;
+    }
+
+    .select {
+        position: relative;
+        width: 50%;
+        height: 30px;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        border: none;
+        background: #e2e2e2;
+    }
+
+        .select:focus {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            outline: none;
+            background: #f3f3f3;
+        }
+
+        .select:after {
+            -ms-transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            position: absolute;
+            right: 1em;
+            bottom: 40%;
+            display: block;
+            width: .75em;
+            height: .75em;
+            border: 2px solid darkslategray;
+            border-top: none;
+            border-right: none;
+            content: '';
+        }
+
+        .select:focus, .select:hover:after {
+            border: 4px solid tomato;
+            border-top: none;
+            border-right: none;
+            -webkit-transition: border, 100ms;
+            transition: border, 100ms;
+        }
+
+        .select select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            -webkit-transition: border, 100ms;
+            transition: border, 100ms;
+            font-size: 1em;
+            font-family: 'Open Sans', helvetica, sans-serif;
+            line-height: 1.5em;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            padding: .5em 1em;
+            border: none;
+            background: #e2e2e2;
+            background: transparent;
+            z-index: 1;
+            position: relative;
+            display: block;
+            width: 100%;
+            outline: none;
+            border: none;
+            font-size: 100%;
+        }
+
+            .select select:focus {
+                border-left: 0.5em solid tomato;
+            }
+
+            .select select:focus {
+                color: darkslategray;
+            }
+
+            .select select:focus {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                outline: none;
+                background: #f3f3f3;
+            }
+
+            .select select:focus {
+                background: url('images/bg-stripes.png');
+            }
+
+                .select select:focus + .select:after {
+                    border: 4px solid tomato;
+                    border-top: none;
+                    border-right: none;
+                    -webkit-transition: border, 100ms;
+                    transition: border, 100ms;
+                }
+</style>

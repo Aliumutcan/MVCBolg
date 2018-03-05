@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "YonetimEtiketler";
+    Layout = "~/Views/Shared/_YonetimLayout.cshtml";
+}
+
+@using MvcBlog.Controllers.Yoneticilere
+@model IEnumerable<MvcBlog.Models.Etitekler>
+@{
+    var grid = new WebGrid(Model,rowsPerPage:10);
+}
+
+@using (Html.BeginForm("YonetimEtiketSil", "Yonetim", FormMethod.Post))
+{
+    <div class="kategoriislemleri">
+        
+    </div>
+    <div class="container-grid">
+        @grid.GetHtml(
+         headerStyle: "webgrid-header",
+         rowStyle: "webgrid-row-style",
+          alternatingRowStyle: "webgrid-row-style",
+    columns: grid.Columns(
+    grid.Column("etiketid", "ID"),
+     grid.Column("etiketadi", "Etiket Adı"),
+    grid.Column("İşlemler", format: @<text>@Html.RouteLink("Sil", "Default", new { defaultid = item.etiketid, action = "YonetimEtiketSil", controller = "Yonetim" })</text>)                                                        ))
+    </div>
+    <style>
+        .webgrid-header {
+            height: 40px;
+            text-align: center;
+            font-size: 11px;
+            padding: 2px;
+            background-color: rgb(76, 193, 232);
+        }
+
+        .webgrid-row-style {
+            min-height: 40px;
+            text-align: center;
+            font-size: 12px;
+            background-color: white;
+        }
+
+        .icerikalani {
+            width: 200px;
+            min-height: 40px;
+        }
+    </style>
+
+}
+
+

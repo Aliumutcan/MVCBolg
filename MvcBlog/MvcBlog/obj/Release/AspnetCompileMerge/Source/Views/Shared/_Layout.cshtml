@@ -1,0 +1,154 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="tr">
+
+<head>
+    @RenderSection("baslik", false)
+
+    <title> </title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Oswald Font -->
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css' />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/pgwslider.css" rel="stylesheet" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/css/tooltipster.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery-unobtrusive")
+</head>
+
+<body>
+
+    <section id="header_area">
+        <div class="wrapper header">
+            <div class="clearfix header_top">
+                <div class="clearfix logo floatleft">
+                    <a href="~/"><h1><span>Ali Umutcan</span> Blogu</h1><h6 style="color:white">Bir bilgisayar mühendisi adayının blogu</h6></a>
+                </div>
+                <div style="float:right;">
+
+                    <div class="clearfix search">
+                        @{
+                            Html.BeginForm("MakalelerGetir", "Makale");
+
+                            <input type="text" name="aranan" placeholder="Yardımcı olabilirmiyim?" />
+                            <input type="submit" />
+                            Html.EndForm();
+                        }
+                    </div>
+
+                    @{
+                        Html.RenderAction("UyeGiris","Home");
+                    }
+                </div>
+
+            </div>
+            <div class="header_bottom">
+                <nav>
+                    <ul id="nav">
+                        <li><a href="~/">Ana Sayfa</a></li>
+                        <li id="dropdown">
+                            <a href="">Kategoriler</a>
+                            <ul>
+                                @{
+                                    Html.RenderAction("ustpanelkategoriler", "Home");
+                                }
+
+                            </ul>
+                        </li>
+                        <li><a href="">Ali Umutcan hakında</a></li>
+                        <li><a href="@Url.Action("Iletisim","Home")">İletişim</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <section id="content_area">
+        <div class="clearfix wrapper main_content_area">
+
+            <div class="clearfix main_content floatleft">
+                @RenderBody()
+            </div>
+
+            <div class="clearfix sidebar_container floatright">
+
+                <div class="clearfix sidebar">
+                    <div class="clearfix single_sidebar">
+                        <div class="popular_post">
+                            <div class="sidebar_title"><h2>En popülerler</h2></div>
+                            <ul>
+                                @{
+                                    Html.RenderAction("enpolulerler", "Home");
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    @{
+                        Html.RenderAction("yanpanelkategoriler", "Home");
+                    }
+
+                    <div class="clearfix single_sidebar">
+                        <h2>Etiketler</h2>
+
+                        @{
+                            Html.RenderAction("yanpaneletiketler", "Home");
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="footer_bottom_area">
+        <div class="clearfix wrapper footer_bottom">
+            <div class="clearfix copyright floatleft">
+                <p> Copyright &copy; All rights reserved by <span>Ali Umutcan KUL</span></p>
+            </div>
+            <div class="clearfix social floatright">
+                <ul>
+                    <li><a class="tooltip" title="Facebook" href=""><i class="fa fa-facebook-square"></i></a></li>
+                    <li><a class="tooltip" title="Twitter" href=""><i class="fa fa-twitter-square"></i></a></li>
+                    <li><a class="tooltip" title="Google+" href=""><i class="fa fa-google-plus-square"></i></a></li>
+                    <li><a class="tooltip" title="LinkedIn" href=""><i class="fa fa-linkedin-square"></i></a></li>
+                    <li><a class="tooltip" title="tumblr" href=""><i class="fa fa-tumblr-square"></i></a></li>
+                    <li><a class="tooltip" title="Pinterest" href=""><i class="fa fa-pinterest-square"></i></a></li>
+                    <li><a class="tooltip" title="RSS Feed" href=""><i class="fa fa-rss-square"></i></a></li>
+                    <li><a class="tooltip" title="Sitemap" href=""><i class="fa fa-sitemap"></i> </a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.0.min.js"></script>
+    <script src="~/Content/js/jquery.tooltipster.min.js"></script>
+    <script src="~/Content/js/pgwslider.js"></script>
+    <script src="~/Content/js/placeholder_support_IE.js"></script>
+    <script src="~/Content/js/selectnav.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.tooltip').tooltipster();
+        });
+    </script>
+    <script type="text/javascript">
+        selectnav('nav', {
+            label: '-Navigation-',
+            nested: true,
+            indent: '-'
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.pgwSlider').pgwSlider({
+
+                intervalDuration: 5000
+
+            });
+        });
+    </script>
+
+
+</body>
+</html>

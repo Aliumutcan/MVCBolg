@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "YonetimYorumlar";
+    Layout = "~/Views/Shared/_YonetimLayout.cshtml";
+}
+@model IEnumerable<MvcBlog.Models.Yorumlar>
+@{
+    var grid = new WebGrid(Model, defaultSort: "Yayın Tarihi", rowsPerPage: 10);
+}
+@using MvcBlog.Controllers.Yoneticilere
+@grid.GetHtml(
+        headerStyle: "webgrid-header",
+        rowStyle: "webgrid-row-style",
+            alternatingRowStyle: "webgrid-row-style",
+    mode: WebGridPagerModes.All,
+    columns: grid.Columns(
+    grid.Column("yorumid", "ID"),
+    grid.Column("yorumyazari", "Yazarı"),
+    grid.Column("yorummail", "E-Posta adresi", canSort: false, style: "epostaalani"),
+        grid.Column("yorumicerik", "İçerik", canSort: false, style: "icerikalani"),
+    grid.Column("yorumtarihi", "Yayın Tarihi"),
+    grid.Column("yorummakaleID", "MID"),
+    grid.Column("yorumbegeni", "Beğeni"),
+    grid.Column("yorumred", "Red"),
+    grid.Column("yorumip", "ip"),
+    grid.Column("Durum", format: @<text>@Html.RouteLink(GenelController.DurumControl((bool)item.yorumdurum), "Default", new { defaultid = item.yorumid, controller = "Yonetim", action = "YonetimYorumDurum" }) </text> ),
+    grid.Column("İşlemler", format: @<text>@Html.ActionLink("Sil", "YonetimYorumSil", new { id = item.yorumid })</text>)
+                            ))
+
+
+<style>
+    .webgrid-header {
+        height: 40px;
+        text-align: center;
+        font-size: 11px;
+        padding: 2px;
+        background-color: rgb(76, 193, 232);
+    }
+
+    .webgrid-row-style {
+        min-height: 40px;
+        text-align: center;
+        font-size: 12px;
+        background-color: white;
+    }
+    .icerikalani{
+        width:200px;
+        min-height:40px;
+    }
+</style>

@@ -1,0 +1,11 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<MvcBlog.Models.Makaleler>
+@foreach (var item in Model)
+{
+    <li>@Html.RouteLink(item.makalebaslik, "MakaleDetay", new {id=@item.makaleid,baslik=MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(item.makalebaslik) })</li>
+                                   
+}
+
+

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "YonetimGiris";
+    Layout = "~/Views/Shared/_YonetimLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <h1>HOŞGELDİNİZ</h1>
+    <div class="clearfix newsletter">
+        <form method="post" action="Yonetim/YonetimGiris">
+            <h2>Yonetici bilgilerinizi girin</h2>
+            <input type="email" placeholder="EMAİL ADRESİNİZİ GİRİN" id="mce-EMAIL" name="mail" /><br />
+            <input type="password" placeholder="ŞİFRENİZİ GİRİN" class="newsletter form" name="sifre" /><br />
+            <input type="submit" value="GİRİŞ" id="mc-embedded-subscribe" />
+        </form>
+    </div>
+}
+
+
+

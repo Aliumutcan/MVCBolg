@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "YonetimMakaleler";
+    Layout = "~/Views/Shared/_YonetimLayout.cshtml";
+}
+@using MvcBlog.Controllers.Yoneticilere
+
+@{var grid = new WebGrid(Model, defaultSort: "Yayın tarihi", rowsPerPage: 10);}
+
+
+<div class="container-grid">
+    @grid.GetHtml(
+            headerStyle: "webgrid-header",
+                rowStyle: "webgrid-row-style",
+                        alternatingRowStyle: "webgrid-row-style",
+    mode: WebGridPagerModes.All,
+    columns: grid.Columns(
+    grid.Column("makaleid", "ID"),
+    grid.Column("makalebaslik", "Başlık"),
+    grid.Column("Kapak Resmi", format: @<text>
+        @if (item.Galeri.kucukresimyol == null)
+        {
+            string imageBase64 = Convert.ToBase64String(item.Galeri.kucukresimimage);
+            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+            <img src="@imageSrc" />
+        }
+        else
+        {
+            <img src="@item.Galeri.kucukresimyol" />
+        }
+
+    </text>),
+    grid.Column("makaleyayintarihi","Yayın Tarihi"),
+    grid.Column("Yazarı",format:@<text>@item.Yazarlar.yazaradi @item.Yazarlar.yazarsoyadi</text> ),
+    grid.Column("Durum",format:@<text>@Html.RouteLink(GenelController.DurumControl((bool)item.makaledurum), "Makaleler", new { id = item.makaleid, islem = GenelController.DurumControl((bool)item.makaledurum) }) @*@Html.ActionLink(YonetimController.DurumControl((bool)item.makaledurum), "YonetimMakaleler", new { id = item.makaleid, islem = YonetimController.DurumControl((bool)item.makaledurum) })*@ </text>),
+    grid.Column("İşlemler",format:@<text>@Html.RouteLink("Sil", "Makaleler", new { id = item.makaleid, islem = "sil" }) @*@Html.ActionLink("Sil", "YonetimMakaleler", new { id = item.makaleid, islem = "sil" })*@
+    @Html.RouteLink("Düzenle", "MakaleDuzenle", new { id = item.makaleid }) @*@Html.RouteLink("Düzenle", "MakaleDuzenle", new { islem = "duzenle", id = @item.makaleid })*@ </text>)
+
+                                                      ))
+</div>
+<style>
+    .webgrid-header {
+        height: 40px;
+        text-align: center;
+        font-size: 11px;
+        padding: 2px;
+        background-color: rgb(76, 193, 232);
+    }
+
+    .webgrid-row-style {
+        min-height: 40px;
+        text-align: center;
+        font-size: 12px;
+        background-color: white;
+    }
+</style>
+

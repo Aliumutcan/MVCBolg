@@ -1,0 +1,11 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<MvcBlog.Models.Kategoriler>
+@foreach (var item in Model)
+{
+    <li>
+        <a href="@Url.RouteUrl("MakaleKategoriGetir", new {kategoriid=item.kategoriid, kategori = MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(@item.kategoriadi) })">@item.kategoriadi</a>
+
+    </li>
+}

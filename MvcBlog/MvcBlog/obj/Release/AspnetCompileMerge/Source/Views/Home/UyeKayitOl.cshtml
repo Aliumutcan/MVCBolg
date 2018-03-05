@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "UyeKayitOl";
+}
+
+@section baslik{
+    <title>Uye kayıt</title>
+}
+
+<div class="clearfix main_content floatleft">
+
+
+    <div class="clearfix content">
+
+        <div class="contact_us">
+
+            <h1>Kayıt ol</h1>
+
+            <p>
+                Sitemize hoşgeldiniz
+            </p>
+
+            <form>
+                <p><input type="text" class="wpcf7-text" placeholder="İsminiz*" name="uyeadi" /></p>
+                <p><input type="text" class="wpcf7-text" placeholder="Soy isminiz*" name="uyesoyadi" /></p>
+                <p><input type="email" class="wpcf7-email" placeholder="Email*" name="uyemail" /></p>
+                <p><input type="password" class="wpcf7-text" placeholder="Şifreniz*" name="uyesifre" /></p>
+                <p><input type="password" class="wpcf7-text" placeholder="Şifreyi tekrarla*" name="uyesifretekrar" /></p>
+                <p><textarea class="wpcf7-textarea" placeholder="Sizi tanıyabilirmiyim (500 kareter)" name="uyetanima"></textarea></p>
+                @using (Html.BeginForm("UyeKayitOl", "Home", FormMethod.Post))
+                {
+                    <p><input type="submit" class="wpcf7-submit" value="Kayıtol" /></p>
+                }
+                
+            </form>
+
+        </div>
+
+    </div>
+
+
+</div>

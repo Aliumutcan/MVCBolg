@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Kategoriler";
+    Layout = "~/Views/Shared/_YonetimLayout.cshtml";
+}
+
+@model IEnumerable<MvcBlog.Models.Kategoriler>
+@using MvcBlog.Controllers.Yoneticilere
+@{
+    var grid = new WebGrid(Model,rowsPerPage:15);
+}
+
+@using (Html.BeginForm("KategoriDuzenleEkle", "Yonetim", FormMethod.Post))
+{
+
+
+
+    <div class="kategoriislemleri">
+        <table>
+            <tr>
+                <td>Kategori adı: </td>
+                <td><input type="text" name="kategoriadi" class="kategoriadi" value="" /></td>
+                <td>
+                    <button type="submit">ekle2</button>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr id="guncellemealani" style="display:none;">
+                <td>Eski kategori adı:<input type="hidden" name="kategoriid1" class="kategoriid1" value="0" /></td>
+                <td><input name="kategoriadi1" class="kategoriadi1" type="text" disabled="disabled" /></td>
+                <td>Yeni kategori adı:</td>
+                <td><input type="text" name="kategoriadi2" class="kategoriadi2" value="" /></td>
+                <td>
+                    <button type="submit">Güncelle</button>
+                    <div style="cursor:pointer;" onclick="iptalet();">İptal et</div>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+    <div class="container-grid">
+        @grid.GetHtml(
+         headerStyle: "webgrid-header",
+         rowStyle: "webgrid-row-style",
+          alternatingRowStyle: "webgrid-row-style",
+    columns: grid.Columns(
+    grid.Column("kategoriid", "ID"),
+    grid.Column("kategoriadi", "Kategori Adı"),
+    grid.Column("İşlemler", format: @<text>@Html.RouteLink("Sil", "Default", new { defaultid = item.kategoriid, action = "KategoriSil", controller = "Yonetim" })
+
+        <style>
+            .webgrid-header {
+                height: 40px;
+                text-align: center;
+                font-size: 11px;
+                padding: 2px;
+                background-color: rgb(76, 193, 232);
+            }
+            .webgrid-row-style {
+                min-height: 40px;
+                text-align: center;
+                font-size: 12px;
+                background-color: white;
+            }
+        </style>
+
+
+
+
+    <input type="hidden" value="@item.kategoriadi" />
+    <div onclick="kategoriduzenle('@item.kategoriadi','@item.kategoriid');">Düzenle</div> </text>)
+
+                                                       ))
+    </div>
+    <script type="text/javascript">
+        function kategoriduzenle(adi, id) {
+            $("#guncellemealani").css("display", "block");
+            $(".kategoriadi1").val(adi);
+            $(".kategoriid1").val(id);
+        }
+        function iptalet()
+        {
+            $("#guncellemealani").css("display", "none");
+        }
+    </script>
+}
+

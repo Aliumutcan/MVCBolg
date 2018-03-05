@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "MakalelerGetir";
+}
+@using PagedList
+@using PagedList.Mvc
+@using MvcBlog.Controllers.Yoneticilere
+@model IPagedList<MvcBlog.Models.Makaleler>
+@section baslik{
+    <title>Ana sayfa</title>
+}
+
+@foreach (var item in Model)
+{
+    <div class="clearfix single_content">
+        <div class="clearfix post_date floatleft">
+            <div class="date">
+                <h3>@Convert.ToDateTime(item.makaleyayintarihi).Day.ToString()</h3>
+                <p>@Enum.GetName(typeof(GenelController.aylar), Convert.ToDateTime(item.makaleyayintarihi).Month)</p>
+            </div>
+        </div>
+        <div class="clearfix post_detail">
+            <h2><a href="">@item.makalebaslik</a></h2>
+            <div class="clearfix post-meta">
+                <p>
+                    <span><i class="fa fa-user"></i> @item.Yazarlar.yazaradi @item.Yazarlar.yazarsoyadi</span>
+                    <span><i class="fa fa-clock-o"></i> @item.makaleyayintarihi.ToString()</span>
+                    <span><i class="fa fa-comment"></i> Yorumlar @item.Yorumlars.Count</span>
+                    <span><i class="fa fa-folder"></i> @item.Kategoriler.kategoriadi</span>
+                </p>
+            </div>
+            <div class="clearfix post_excerpt">
+                @if (item.Galeri.ortaresimimage != null)
+                {
+                    string imageBase64 = Convert.ToBase64String(item.Galeri.ortaresimimage);
+                    string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                    <img src="@imageSrc" />
+                }
+                else
+                {
+                    <img src="@item.Galeri.ortaresimyol" alt="" />
+                }
+
+                <p>
+                    @{
+                string icerik = "";
+                if (@item.makaleicerik.Count() >= 200)
+                {
+                    icerik = @item.makaleicerik.Substring(0, 200);
+                }
+                else
+                {
+                    icerik = @item.makaleicerik;
+                }
+                    }
+                    @Html.Raw(icerik) .....
+                </p>
+            </div>
+            @Html.RouteLink("Devam....", "MakaleDetay", new { id = @item.makaleid, baslik = MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(@item.makalebaslik) })
+        </div>
+    </div>
+}
+<div class="pagedList">
+    @Html.PagedListPager(Model, sayfa => Url.RouteUrl("MakaleGetir", new { sayfa }), PagedListRenderOptions.PageNumbersOnly)
+</div>
+<style>
+    .pagedList {
+        width: 100%;
+        height: auto;
+    }
+
+        .pagedList li {
+            width: 15px;
+            height: 20px;
+            background-color: rgb(144, 144, 144);
+            float: left;
+            margin: 5px;
+            text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px 5px 5px 5px;
+        }
+
+        .pagedList .active {
+            width: 15px;
+            height: 20px;
+            background-color: rgb(255, 216, 0);
+        }
+</style>

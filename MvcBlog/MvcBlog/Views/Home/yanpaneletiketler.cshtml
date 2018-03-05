@@ -1,0 +1,16 @@
+﻿@{
+    Layout = null;
+}
+@{
+    MvcBlog.Models.Etitekler e = new MvcBlog.Models.Etitekler();
+    
+}
+@foreach (var item in ViewBag.etiketler)
+{
+    <a href="@Url.RouteUrl("MakaleEtiketGetir", new { etiketid = item.etiketid, etiket = MvcBlog.Controllers.Yoneticilere.GenelController.KarakterDuzenle(item.etiketadi) })">
+        <div style="float:left; margin-left:3px; margin-bottom:2px; padding:2px; background:#FFD406;">
+            <img src="~/Content/images/etiket.png" width="20" height="25" />
+            @item.etiketadi
+        </div>
+    </a>
+}
